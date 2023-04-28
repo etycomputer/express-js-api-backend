@@ -1,1 +1,5 @@
 ﻿.idea
+my-api/node_modules
+my-api/package-lock.json
+my-api/error.log
+my-api/combined.log
