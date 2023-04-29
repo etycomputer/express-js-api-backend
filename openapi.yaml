@@ -567,17 +567,17 @@ components:
           type: integer
           minimum: 0
         installPosition:
-            type: object
-            properties:
-              x:
-                type: number
-                format: float
-              y:
-                type: number
-                format: float
-              z:
-                type: number
-                format: float
+          type: object
+          properties:
+            x:
+              type: number
+              format: float
+            y:
+              type: number
+              format: float
+            z:
+              type: number
+              format: float
         activated:
           type: boolean
           default: false
