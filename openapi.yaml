@@ -4,7 +4,7 @@ info:
   description: API for managing objects
   version: 1.0.0
 servers:
-  - url: http://localhost:3000
+  - url: http://localhost:3000/api/v1.0
 paths:
   /auth/token:
     post:
@@ -518,109 +518,142 @@ components:
   schemas:
     AuthCredentials:
       type: object
-      required:
-        - username
-        - password
       properties:
-        username:
+        "username":
           type: string
           description: User's username
-        password:
+        "password":
           type: string
           description: User's password
+      required:
+        - "username"
+        - "password"
     ApiKey:
       type: object
       properties:
-        apiKey:
+        "apiKey":
           type: string
           description: Generated API key
     Error:
       type: object
       properties:
-        error:
+        "error":
           type: string
           description: Error message
     Object:
       type: object
       properties:
-        objectsId:
+        "objectsId":
           type: integer
           minimum: 0
-        serial:
+        "type":
+          type: integer
+          minimum: 0
+          default: 0
+        "serial":
           type: string
-        holeId:
+        "holeId":
           type: integer
           minimum: -1
           default: -1
       required:
-        - type
+        - "type"
+      example:
+        "objectsId": 1
+        "type": 1
+        "serial": "M1"
+        "holeId": -1
     Marker:
       type: object
       properties:
-        markerId:
+        "markerId":
           type: integer
           minimum: 0
-        subnet:
+        "subnet":
           type: integer
           minimum: 0
-        node:
+        "node":
           type: integer
           minimum: 0
-        installPosition:
+        "installPosition":
           type: object
           properties:
-            x:
+            "x":
               type: number
               format: float
-            y:
+            "y":
               type: number
               format: float
-            z:
+            "z":
               type: number
               format: float
-        activated:
+          example:
+            "x": 5.962134
+            "y": 5.637377
+            "z": 2.302136
+        "activated":
           type: boolean
           default: false
-        activationTime:
+        "activationTime":
           type: string
           format: date-time
       required:
-        - subnet
-        - node
+        - "subnet"
+        - "node"
+      example:
+        "subnet": 1
+        "node": 1
+        "installPosition":
+          "x": 5.962134
+          "y": 5.637377
+          "z": 2.302136
+        "activationTime": 2000-01-23T04:56:07.000+00:00
+        "markerId": 1
+        "activated": true
     Reading:
       type: object
       properties:
-        readingId:
+        "readingId":
           type: integer
           minimum: 0
-        timestamp:
+        "timestamp":
           type: string
           format: date-time
-        temperature:
+        "temperature":
           type: number
           format: float
-        porePressure:
+        "porePressure":
           type: number
           format: float
+      example:
+          "readingId": 1
+          "timestamp": 2000-01-23T04:56:07.000+00:00
+          "temperature": 26.0274563
+          "porePressure": 46581.29
     readings:
       type: array
       items:
         type: object
         properties:
-          readingId:
+          "readingId":
             type: integer
             minimum: 0
-          timestamp:
+          "timestamp":
             type: string
             format: date-time
-          temperature:
+          "temperature":
             type: number
             format: float
-          porePressure:
+          "porePressure":
             type: number
             format: float
         required:
-          - timestamp
+          - "timestamp"
+        example:
+          "readingId": 1
+          "timestamp": 2000-01-23T04:56:07.000+00:00
+          "temperature": 26.0274563
+          "porePressure": 46581.29
   securitySchemes:
     OAuth2:
       type: oauth2
