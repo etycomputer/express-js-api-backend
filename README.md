@@ -24,32 +24,33 @@ The database will be a Postgres database and will store data for three types of 
 - porePressure: number (format: float)
 ### API Endpoints
 The API will have the following endpoints:
+However, at this point we only need to fully implement the checked  API endpoints.
 #### Objects Endpoints
-- GET /objects/{objectsId}: Get an object by its ID.
-- PUT /objects/{objectsId}: Update an object by its ID.
-- PATCH /objects/{objectsId}: Partially update an object by its ID.
-- GET /objects/count: Get the total number of objects in the system.
-- GET /objects/type/{type}: Get all objects with a given type (e.g. 0 for Unspecified or 1 for Markers).
-- GET /objects/hole/{holeId}: Get all objects with a given holeId.
+- [ ] GET /objects/{objectsId}: Get an object by its ID.
+- [ ] PUT /objects/{objectsId}: Update an object by its ID.
+- [ ] PATCH /objects/{objectsId}: Partially update an object by its ID.
+- [ ] GET /objects/count: Get the total number of objects in the system.
+- [ ] GET /objects/type/{type}: Get all objects with a given type (e.g. 0 for Unspecified or 1 for Markers).
+- [ ] GET /objects/hole/{holeId}: Get all objects with a given holeId.
 #### Markers Endpoints
-- GET /markers/{markerId}: Get a marker by its ID.
-- PUT /markers/{markerId}: Update a marker by its ID.
-- PATCH /markers/{markerId}: Partially update a marker by its ID.
-- GET /markers/serial/{serial}: Get a marker by its serial.
-- GET /markers/type/{type}: Get all markers of a given type.
-- GET /markers/hole/{holeId}: Get all markers of a given holeId.
-- GET /markers/address/{subnet}: Get all markers of a given subnet address.
-- GET /markers/address/{subnet}/{node}: Get a marker with a given subnet and node address.
-- POST /markers: Add a new marker.
-- GET /markers: Get all marker.
-- GET /markers/{markerId}/readings: Get all readings for a specific Marker by its ID. This endpoint also accepts two query parameters, startTimestamp and endTimestamp, which define the time range for the Marker readings to retrieve. A limit query parameter is also optional.
-  - GET /markers/{markerId}/readings?limit=5
-  - GET /markers/{markerId}/readings?startTimestamp=2023-02-20%2023:00:01
-  - GET /markers/{markerId}/readings?startTimestamp=2023-02-20%2023:00:01& endTimestamp=2023-02-21%2000:00:01
-- GET /markers/{markerId}/readings/count: Get the total number of readings for a specific Marker by its ID.
-- POST /markers/{markerId}/readings: Add a new reading for a specific Marker by its ID.
-- PUT /markers/{markerId}/readings/{readingId}: Update a specific reading for a specific Marker by its ID and reading ID.
-- DELETE /markers/{markerId}/readings/{readingId}: Delete a specific reading for a specific Marker by its ID and reading ID.
+- [x] GET /markers/{markerId}: Get a marker by its ID.
+- [ ] PUT /markers/{markerId}: Update a marker by its ID.
+- [x] PATCH /markers/{markerId}: Partially update a marker by its ID.
+- [ ] GET /markers/serial/{serial}: Get a marker by its serial.
+- [ ] GET /markers/type/{type}: Get all markers of a given type.
+- [ ] GET /markers/hole/{holeId}: Get all markers of a given holeId.
+- [ ] GET /markers/address/{subnet}: Get all markers of a given subnet address.
+- [ ] GET /markers/address/{subnet}/{node}: Get a marker with a given subnet and node address.
+- [x] POST /markers: Add a new marker.
+- [x] GET /markers: Get all marker.
+- [x] GET /markers/{markerId}/readings: Get all readings for a specific Marker by its ID. This endpoint also accepts two query parameters, startTimestamp and endTimestamp, which define the time range for the Marker readings to retrieve. A limit query parameter is also optional.
+ - [ ] GET	/markers/{markerId}/readings?limit=10: Get the first 10 readings for a specific Marker by its ID. 
+ - [ ] GET	/markers/{markerId}/readings?limit=10&start_timestamp=startTimestamp=2023-02-20%2023:00:01: Get the first 10 readings from 2023-02-20 23:00:01 (UTC) for a specific Marker by its ID.
+ - [ ] GET	/markers/{markerId}/readings?limit=10&start_timestamp=startTimestamp=2023-02-20%2023:00:01&endTimestamp=2023-02-21%2000:00:01: Get the first 10 readings between 2023-02-20 23:00:01 and 2023-02-21 00:00:01 (UTC) for a specific Marker by its ID.
+- [ ] GET /markers/{markerId}/readings/count: Get the total number of readings for a specific Marker by its ID.
+- [x] POST /markers/{markerId}/readings: Add a new reading for a specific Marker by its ID.
+- [ ] PUT /markers/{markerId}/readings/{readingId}: Update a specific reading for a specific Marker by its ID and reading ID.
+- [x] DELETE /markers/{markerId}/readings/{readingId}: Delete a specific reading for a specific Marker by its ID and reading ID.
 ### Inputs
 The following input materials are given to help with this project:
 #### [openapi.yaml](./openapi.yaml)
