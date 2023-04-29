@@ -25,6 +25,8 @@ The database will be a Postgres database and will store data for three types of 
 ### API Endpoints
 The API will have the following endpoints:
 However, at this point we only need to fully implement the checked  API endpoints.
+#### Authentication Endpoint
+- [x] POST /auth/token: Authenticate user and retrieve API key.
 #### Objects Endpoints
 - [ ] GET /objects/{objectsId}: Get an object by its ID.
 - [ ] PUT /objects/{objectsId}: Update an object by its ID.

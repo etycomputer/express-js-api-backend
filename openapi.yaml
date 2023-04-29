@@ -6,6 +6,28 @@ info:
 servers:
   - url: http://localhost:3000
 paths:
+  /auth/token:
+    post:
+      summary: Authenticate user and retrieve API key
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthCredentials"
+      responses:
+        '200':
+          description: Authentication successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiKey"
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /objects/{objectsId}:
     get:
       summary: Get a object by its ID
@@ -495,6 +517,30 @@ paths:
           description: Marker or Reading not found.
 components:
   schemas:
+    AuthCredentials:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+          description: User's username
+        password:
+          type: string
+          description: User's password
+    ApiKey:
+      type: object
+      properties:
+        apiKey:
+          type: string
+          description: Generated API key
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
     Object:
       type: object
       properties:
