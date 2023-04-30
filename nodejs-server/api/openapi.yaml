@@ -1,0 +1,376 @@
+openapi: 3.0.0
+info:
+  title: Objects API
+  description: API for managing objects
+  version: 1.0.0
+servers:
+- url: http://localhost:3000/api/v1.0
+paths:
+  /auth/token:
+    post:
+      summary: Authenticate user and retrieve API key
+      operationId: authTokenPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthCredentials'
+        required: true
+      responses:
+        "200":
+          description: Authentication successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiKey'
+        "401":
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-swagger-router-controller: Default
+  /markers/{markerId}:
+    get:
+      summary: Get a marker by its ID
+      operationId: markersMarkerIdGET
+      parameters:
+      - name: markerId
+        in: path
+        description: ID of the marker to retrieve
+        required: true
+        style: simple
+        explode: false
+        schema:
+          minimum: 0
+          type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Marker'
+        "404":
+          description: Marker not found
+      security:
+      - OAuth2:
+        - read
+      x-swagger-router-controller: Default
+    patch:
+      summary: Partially update a marker by its ID
+      operationId: markersMarkerIdPATCH
+      parameters:
+      - name: markerId
+        in: path
+        description: ID of the marker to update
+        required: true
+        style: simple
+        explode: false
+        schema:
+          minimum: 0
+          type: integer
+      requestBody:
+        description: Partially updated marker object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Marker'
+        required: true
+      responses:
+        "204":
+          description: No content
+        "404":
+          description: Marker not found
+      security:
+      - OAuth2:
+        - write
+      x-swagger-router-controller: Default
+  /marker:
+    get:
+      summary: Get all markers.
+      operationId: markerGET
+      responses:
+        "200":
+          description: List of all markers.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Marker'
+                x-content-type: application/json
+      security:
+      - OAuth2:
+        - read
+      x-swagger-router-controller: Default
+    post:
+      summary: Add a new marker.
+      operationId: markerPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Marker'
+        required: true
+      responses:
+        "201":
+          description: The newly created marker.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Marker'
+      security:
+      - OAuth2:
+        - write
+      x-swagger-router-controller: Default
+  /markers/{markerId}/readings:
+    get:
+      summary: Get all readings for a specific Marker by its ID.
+      operationId: markersMarkerIdReadingsGET
+      parameters:
+      - name: markerId
+        in: path
+        description: ID of the Marker to retrieve readings for.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          minimum: 0
+          type: integer
+      - name: startTimestamp
+        in: query
+        description: Start timestamp of the time range for the Marker readings to
+          retrieve.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          format: date-time
+      - name: endTimestamp
+        in: query
+        description: End timestamp of the time range for the Marker readings to retrieve.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          format: date-time
+      - name: limit
+        in: query
+        description: The numbers of items to return
+        required: false
+        style: form
+        explode: true
+        schema:
+          maximum: 200
+          minimum: 0
+          type: integer
+          default: 100
+      responses:
+        "200":
+          description: List of readings for the specified Marker.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Readings'
+                x-content-type: application/json
+      security:
+      - OAuth2:
+        - read
+      x-swagger-router-controller: Default
+    post:
+      summary: Add a new reading for a specific Marker by its ID.
+      operationId: markersMarkerIdReadingsPOST
+      parameters:
+      - name: markerId
+        in: path
+        description: ID of the Marker to add a reading for.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          minimum: 0
+          type: integer
+      requestBody:
+        description: JSON object containing the details of the new reading to add.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Reading'
+        required: true
+      responses:
+        "201":
+          description: New reading added successfully.
+        "400":
+          description: Invalid request body. The request body should contain the details
+            of the new reading.
+      security:
+      - OAuth2:
+        - write
+      x-swagger-router-controller: Default
+  /markers/{markerId}/readings/{readingId}:
+    delete:
+      summary: Delete a specific reading for a specific Marker by its ID and reading
+        ID.
+      operationId: markersMarkerIdReadingsReadingIdDELETE
+      parameters:
+      - name: markerId
+        in: path
+        description: ID of the Marker to delete Reading from.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          minimum: 0
+          type: integer
+      - name: readingId
+        in: path
+        description: ID of the Reading to delete.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          minimum: 0
+          type: integer
+      responses:
+        "204":
+          description: Successful response.
+        "404":
+          description: Marker or Reading not found.
+      security:
+      - OAuth2:
+        - write
+      x-swagger-router-controller: Default
+components:
+  schemas:
+    AuthCredentials:
+      required:
+      - password
+      - username
+      type: object
+      properties:
+        username:
+          type: string
+          description: User's username
+        password:
+          type: string
+          description: User's password
+    ApiKey:
+      type: object
+      properties:
+        apiKey:
+          type: string
+          description: Generated API key
+      example:
+        apiKey: apiKey
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+    Marker:
+      required:
+      - node
+      - subnet
+      type: object
+      properties:
+        markerId:
+          minimum: 0
+          type: integer
+        subnet:
+          minimum: 0
+          type: integer
+        node:
+          minimum: 0
+          type: integer
+        installPosition:
+          $ref: '#/components/schemas/Marker_installPosition'
+        activated:
+          type: boolean
+          default: false
+        activationTime:
+          type: string
+          format: date-time
+      example:
+        subnet: 1
+        node: 1
+        installPosition:
+          x: 5.962134
+          "y": 5.637377
+          z: 2.302136
+        activationTime: 2000-01-23T04:56:07.000+00:00
+        markerId: 1
+        activated: true
+    Reading:
+      type: object
+      properties:
+        readingId:
+          minimum: 0
+          type: integer
+        timestamp:
+          type: string
+          format: date-time
+        temperature:
+          type: number
+          format: float
+        porePressure:
+          type: number
+          format: float
+      example:
+        readingId: 1
+        timestamp: 2000-01-23T04:56:07.000+00:00
+        temperature: 26.0274563
+        porePressure: 46581.29
+    Readings:
+      type: array
+      items:
+        $ref: '#/components/schemas/Readings_inner'
+    Marker_installPosition:
+      type: object
+      properties:
+        x:
+          type: number
+          format: float
+        "y":
+          type: number
+          format: float
+        z:
+          type: number
+          format: float
+      example: "{\"x\":5.962134,\"y\":5.637377,\"z\":2.302136}"
+    Readings_inner:
+      required:
+      - timestamp
+      type: object
+      properties:
+        readingId:
+          minimum: 0
+          type: integer
+        timestamp:
+          type: string
+          format: date-time
+        temperature:
+          type: number
+          format: float
+        porePressure:
+          type: number
+          format: float
+      example:
+        readingId: 1
+        timestamp: 2000-01-23T04:56:07.000+00:00
+        temperature: 26.0274563
+        porePressure: 46581.29
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://auth.example.com/token
+          scopes:
+            read: Read access to the API
+            write: Write access to the API
