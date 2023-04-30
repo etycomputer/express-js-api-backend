@@ -1,0 +1,61 @@
+{
+  "name": "express-js-api-backend",
+  "version": "1.0.0",
+  "description": "In this project, we will build an API backend using Express JS (TypeScript) to store and retrieve data from a Postgres database using TypeORM as the ORM. This API backend will be used to provide data to our web application. The API is required to adhere to the OpenAPI standard and be fully unit tested. We will also require an end-to-end testing system using Postman.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./dist/index.js --env=production",
+    "start:dev": "ts-node -r tsconfig-paths/register ./src",
+    "lint": "eslint . --ext .ts",
+    "generate-endpoints": "openapi-generator-plus -c openapi-generator-plus-config.yaml",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "typeorm": "typeorm-ts-node-commonjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/etycomputer/express-js-api-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/etycomputer/express-js-api-backend/issues"
+  },
+  "homepage": "https://github.com/etycomputer/express-js-api-backend#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "connect-ensure-login": "^0.1.1",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "http-status-codes": "^2.2.0",
+    "knex": "^2.4.2",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0",
+    "pg": "^8.10.0",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "0.3.15",
+    "uuid": "^9.0.0",
+    "winston": "^3.8.2"
+  },
+  "devDependencies": {
+    "@openapi-generator-plus/typescript-express-example-server-generator": "^1.2.0",
+    "@openapi-generator-plus/typescript-express-passport-server-generator": "^2.7.0",
+    "@types/cookie-parser": "^1.4.3",
+    "@types/express": "^4.17.17",
+    "@types/express-session": "^1.17.7",
+    "@types/passport": "^1.0.12",
+    "@types/passport-local": "^1.0.35",
+    "@types/connect-ensure-login": "^0.1.7",
+    "@types/pg": "^8.6.6",
+    "@types/node": "^16.11.10",
+    "@typescript-eslint/eslint-plugin": "^5.59.1",
+    "@typescript-eslint/parser": "^5.59.1",
+    "eslint": "^8.39.0",
+    "openapi-generator-plus": "^2.6.0",
+    "ts-node": "10.9.1",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "5.0.4"
+  }
+}
+

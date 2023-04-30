@@ -1,0 +1,14 @@
+# OpenAPI Generator Plus generator configuration
+#
+# The path (relative to this configuration file) or a URL for your API specification
+inputPath: ./openapi.yaml
+
+# The path (relative to this configuration file) where the generated API should be output
+outputPath: ./src/GeneratedRouter
+
+# The name of the generator template used
+# generator: "@openapi-generator-plus/typescript-express-example-server-generator"
+generator: "@openapi-generator-plus/typescript-express-passport-server-generator"
+
+# See https://github.com/karlvr/openapi-generator-plus-express-passport#readme for more configuration options
+# See https://github.com/karlvr/openapi-generator-plus-generators/tree/master/packages/typescript-express-example-server#readme for more configuration options
