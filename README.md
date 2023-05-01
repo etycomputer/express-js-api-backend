@@ -53,15 +53,6 @@ However, at this point we only need to fully implement the checked  API endpoint
 - [x] POST /markers/{markerId}/readings: Add a new reading for a specific Marker by its ID.
 - [ ] PUT /markers/{markerId}/readings/{readingId}: Update a specific reading for a specific Marker by its ID and reading ID.
 - [x] DELETE /markers/{markerId}/readings/{readingId}: Delete a specific reading for a specific Marker by its ID and reading ID.
-### Inputs
-The following input materials are given to help with this project:
-#### [openapi.yaml](./openapi.yaml)
-This is a very basic version of the openapi.yaml file that contains all the different endpoint paths and components needed for this project. You can use this file in conjunction with the openapi code generator to generate the initial code needed to implement this Express JS API backend.
-One of the OpenAPI tools available is the [openapi-generator-cli](https://github.com/OpenAPITools/openapi-generator-cli) that can be used to generate the code needed to generate ExpressJS code.
-`npm install @openapitools/openapi-generator-cli`
-`npx openapi-generator-cli generate -i openapi.yaml -g nodejs-express-server -o my-api`
-`cd my-api`
-`npm install`
 
 ## Objectives
 The objectives of this project are as follows:
@@ -89,6 +80,26 @@ The expected deliverables for this project are as follows:
 7.	The input/output of the API request and should be in JSON format.
 8.	The performance and security level of the API would be evaluated using Postman or Swagger tools. 
 
+### Inputs
+The following input materials are given to help with this project:
+#### [openapi.yaml](./openapi.yaml)
+This is a very basic version of the openapi.yaml file that contains all the different endpoint paths and components needed for this project. You can use this file in conjunction with the openapi code generator to generate the initial code needed to implement this Express JS API backend.
+
+# OpenAPI Generator CLI
+One of the OpenAPI tools available is the [openapi-generator-cli](https://github.com/OpenAPITools/openapi-generator-cli) that can be used to generate the code needed to generate ExpressJS code.
+
+## Using
+```shell
+npm install @openapitools/openapi-generator-cli
+npx openapi-generator-cli generate -i openapi.yaml -g nodejs-express-server -o my-api
+cd my-api
+npm install
+```
+
+# Swagger Code Generator
+[Swagger Editor](https://editor.swagger.io/) is an online editor that you can open your openapi.yaml and generate code with.
+There are many server side versions that the code can convert into, including NodeJS.
+You can also generate client code too.
 
 # OpenAPI Generator Plus generator project
 
