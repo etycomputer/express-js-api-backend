@@ -1,0 +1,77 @@
+openapi: 3.0.0
+info:
+  title: Objects API
+  description: API for managing objects
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000/api/v1.0
+paths:
+  /markers/{markerId}:
+    get:
+      summary: Get a marker by its ID
+      parameters:
+        - in: path
+          name: markerId
+          description: ID of the marker to retrieve
+          required: true
+          schema:
+            type: integer
+            minimum: 0
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Marker'
+        '404':
+          description: Marker not found
+components:
+  schemas:
+    Marker:
+      type: object
+      properties:
+        "markerId":
+          type: integer
+          minimum: 0
+        "subnet":
+          type: integer
+          minimum: 0
+        "node":
+          type: integer
+          minimum: 0
+        "installPosition":
+          type: object
+          properties:
+            "x":
+              type: number
+              format: float
+            "y":
+              type: number
+              format: float
+            "z":
+              type: number
+              format: float
+          example:
+            "x": 5.962134
+            "y": 5.637377
+            "z": 2.302136
+        "activated":
+          type: boolean
+          default: false
+        "activationTime":
+          type: string
+          format: date-time
+      required:
+        - "subnet"
+        - "node"
+      example:
+        "subnet": 1
+        "node": 1
+        "installPosition":
+          "x": 5.962134
+          "y": 5.637377
+          "z": 2.302136
+        "activationTime": 2000-01-23T04:56:07.000+00:00
+        "markerId": 1
+        "activated": true
