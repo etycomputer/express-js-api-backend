@@ -18,13 +18,13 @@ paths:
             type: integer
             minimum: 0
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Marker'
-        '404':
+                $ref: "#/components/schemas/Marker"
+        "404":
           description: Marker not found
 components:
   schemas:

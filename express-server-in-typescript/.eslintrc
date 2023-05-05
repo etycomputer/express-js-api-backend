@@ -1,0 +1,30 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:markdown/recommended",
+    "plugin:yaml/recommended"
+  ],
+  "plugins": ["@typescript-eslint", "markdown", "yaml"],
+  "rules": {
+    "no-console": 0 // Remember, this means error!
+  },
+  "ignorePatterns": ["node_modules/*", "dist/*"],
+  "overrides": [
+    {
+      "files": ["**/*.md"],
+      "processor": "markdown/markdown"
+    },
+    {
+      "files": ["**/*.md/*.js"]
+    }
+  ]
+}

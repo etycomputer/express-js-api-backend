@@ -1,4 +1,4 @@
-import express from 'express';
+import express from "express";
 import { MarkerController } from "../controllers/markerController";
 
 export const markers = express.Router();

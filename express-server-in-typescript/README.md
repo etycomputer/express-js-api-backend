@@ -1,16 +1,16 @@
 # Project Folder structure
 
 - config/
-    - index.ts
+  - index.ts
 - controllers/
-    - userController.ts
+  - userController.ts
 - models/
-    - user.ts
+  - user.ts
 - routes/
-    - index.ts
-    - userRoutes.ts
+  - index.ts
+  - userRoutes.ts
 - tests/
-    - userController.test.ts
+  - userController.test.ts
 - app.ts
 - package.json
 - tsconfig.json
@@ -27,26 +27,31 @@
 # OpenAPI Typescript Generator
 
 Initializing a new npm package:
+
 ```shell
 npm init -y
 ```
 
 Install the necessary dependencies:
+
 ```shell
 npm install express body-parser openapi-typescript
 ```
 
 Initializing a new TypeScript configuration file:
+
 ```shell
 npx tsc --init
 ```
 
 Create a src folder in the root of your project, and create a new file inside it called index.ts. This file will contain the main code for your Express application.
+
 ```javascript
 npx tsc --init
 ```
 
 Use openapi-typescript to generate TypeScript interfaces and router functions based on your OpenAPI specification:
+
 ```shell
 npx openapi-typescript openapi.yaml -o src/generated
 ```

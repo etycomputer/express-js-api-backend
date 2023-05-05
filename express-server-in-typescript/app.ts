@@ -1,8 +1,9 @@
-import express from 'express';
+import express from "express";
+import logger from "./configs/logging";
 // import morgan from 'morgan';
 // import helmet from 'helmet';
 // import cors from 'cors';
-import { router as routes } from './routes';
+import { router as routes } from "./routes";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -15,15 +16,22 @@ app.use(express.urlencoded({ extended: true }));
 // app.use(cors());
 
 // Routes
-app.use('/', routes);
+app.use("/", routes);
 
 // Error handling middleware
-app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
-  console.error(err.stack);
-  res.status(500).send('Internal Server Error');
-});
+app.use(
+  (
+    err: Error,
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) => {
+    logger.error(err.stack);
+    res.status(500).send("Internal Server Error");
+  }
+);
 
 // Start the server
 app.listen(port, () => {
-  console.log(`Server started at http://localhost:${port}`);
+  logger.info(`Server started at http://localhost:${port}`);
 });
