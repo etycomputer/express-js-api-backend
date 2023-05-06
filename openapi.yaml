@@ -16,13 +16,13 @@ paths:
             schema:
               $ref: "#/components/schemas/AuthCredentials"
       responses:
-        '200':
+        "200":
           description: Authentication successful
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ApiKey"
-        '401':
+        "401":
           description: Invalid credentials
           content:
             application/json:
@@ -154,7 +154,7 @@ paths:
   #               type: array
   #               items:
   #                 $ref: '#/components/schemas/Object'
-  /markers/{markerId}:
+  /marker/{markerId}:
     get:
       summary: Get a marker by its ID
       security:
@@ -168,13 +168,13 @@ paths:
             type: integer
             minimum: 0
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Marker'
-        '404':
+                $ref: "#/components/schemas/Marker"
+        "404":
           description: Marker not found
     # put:
     #   summary: Update a marker by its ID
@@ -218,13 +218,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Marker'
+              $ref: "#/components/schemas/Marker"
       responses:
-        '204':
+        "204":
           description: No content
-        '404':
+        "404":
           description: Marker not found
-  # /markers/serial/{serial}:
+  # /marker/serial/{serial}:
   #   get:
   #     summary: Get a marker by its serial
   #     security:
@@ -245,7 +245,7 @@ paths:
   #               $ref: '#/components/schemas/Marker'
   #       '404':
   #         description: Marker not found
-  # /markers/type/{type}:
+  # /marker/type/{type}:
   #   get:
   #     summary: Get all markers of a given type
   #     security:
@@ -337,36 +337,37 @@ paths:
   #                 $ref: '#/components/schemas/Marker'
   /marker:
     post:
-        summary: Add a new marker.
-        security:
-            - OAuth2: [write]
-        requestBody:
-          required: true
+      summary: Add a new marker.
+      security:
+        - OAuth2: [write]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Marker"
+      responses:
+        "201":
+          description: The newly created marker.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Marker'
-        responses:
-          '201':
-            description: The newly created marker.
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Marker'
+                $ref: "#/components/schemas/Marker"
+  /marker/list:
     get:
-        summary: Get all markers.
-        security:
-            - OAuth2: [read]
-        responses:
-          '200':
-            description: List of all markers.
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/Marker'
-  /markers/{markerId}/readings:
+      summary: Get all markers.
+      security:
+        - OAuth2: [read]
+      responses:
+        "200":
+          description: List of all markers.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Marker"
+  /marker/{markerId}/reading/list:
     get:
       summary: Get all readings for a specific Marker by its ID.
       security:
@@ -407,7 +408,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Readings'
+                  $ref: "#/components/schemas/Readings"
     post:
       summary: Add a new reading for a specific Marker by its ID.
       security:
@@ -426,13 +427,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Reading'
+              $ref: "#/components/schemas/Reading"
       responses:
         201:
           description: New reading added successfully.
         400:
           description: Invalid request body. The request body should contain the details of the new reading.
-  # /markers/{markerId}/readings/count:
+  # /marker/{markerId}/reading/listCount:
   #   get:
   #     summary: Get the total number of readings for a specific Marker by its ID.
   #     security:
@@ -453,7 +454,7 @@ paths:
   #             schema:
   #               type: integer
   #               minimum: 0
-  /markers/{markerId}/readings/{readingId}:
+  /marker/{markerId}/reading/{readingId}:
     # put:
     #   summary: Update a specific reading for a specific Marker by its ID and reading ID.
     #   security:
@@ -628,10 +629,10 @@ components:
           type: number
           format: float
       example:
-          "readingId": 1
-          "timestamp": 2000-01-23T04:56:07.000+00:00
-          "temperature": 26.0274563
-          "porePressure": 46581.29
+        "readingId": 1
+        "timestamp": 2000-01-23T04:56:07.000+00:00
+        "temperature": 26.0274563
+        "porePressure": 46581.29
     Readings:
       type: array
       items:
@@ -661,7 +662,7 @@ components:
       type: oauth2
       flows:
         clientCredentials:
-            tokenUrl: https://auth.example.com/token
-            scopes:
-                read: Read access to the API
-                write: Write access to the API
+          tokenUrl: https://auth.example.com/token
+          scopes:
+            read: Read access to the API
+            write: Write access to the API
