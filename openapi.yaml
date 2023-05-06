@@ -584,6 +584,10 @@ components:
             "z":
               type: number
               format: float
+          required:
+            - "x"
+            - "y"
+            - "z"
           example:
             "x": 5.962134
             "y": 5.637377
@@ -597,6 +601,7 @@ components:
       required:
         - "subnet"
         - "node"
+        - "installPosition"
       example:
         "subnet": 1
         "node": 1
