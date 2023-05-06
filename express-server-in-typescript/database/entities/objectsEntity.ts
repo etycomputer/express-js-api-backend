@@ -5,7 +5,7 @@ export class objectEntity {
   @PrimaryGeneratedColumn()
   objectsId!: number;
 
-  @Column({ type: "text", unique : true})
+  @Column({ type: "text", unique: true })
   serial!: string;
 
   @Column({ type: "integer", default: -1 })
