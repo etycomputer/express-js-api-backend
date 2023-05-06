@@ -11,6 +11,11 @@
     "lint-fix": "eslint ./** --fix",
     "build": "tsc && node dist/index.js",
     "start": "node dist/index.js --env=production",
+    "db:sync": "typeorm-ts-node-commonjs schema:sync -d ./database/adminDataSource.ts",
+    "db:show": "typeorm-ts-node-commonjs migration:show -d ./database/adminDataSource.ts",
+    "db:create": "typeorm-ts-node-commonjs migration:create ./database/migrations/migration",
+    "db:revert:fake": "typeorm-ts-node-commonjs migration:revert -f -t -d ./database/adminDataSource.ts",
+    "db:revert": "typeorm-ts-node-commonjs migration:revert -t -d ./database/adminDataSource.ts",
     "seed": "ts-node ./database/seeders/default.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -26,18 +31,21 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "pg": "^8.10.0",
+    "reflect-metadata": "^0.1.13",
     "typeorm": "^0.3.15",
     "winston": "^3.8.2"
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.1",
     "@types/express": "^4.17.13",
+    "@types/node": "^20.1.0",
     "@typescript-eslint/eslint-plugin": "^5.59.2",
     "@typescript-eslint/parser": "^5.59.2",
     "eslint": "^8.39.0",
     "eslint-plugin-markdown": "^3.0.0",
     "eslint-plugin-yaml": "^0.5.0",
     "prettier": "^2.8.8",
+    "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.0.4"
   }

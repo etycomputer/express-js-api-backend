@@ -23,4 +23,8 @@ export class Marker {
     this.activated = activated;
     this.activationTime = activationTime;
   }
+
+  find(): Marker[] {
+    return [];
+  }
 }
