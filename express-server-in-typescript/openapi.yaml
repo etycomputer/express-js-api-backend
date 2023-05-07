@@ -6,9 +6,223 @@ info:
 servers:
   - url: http://localhost:3000/api/v1.0
 paths:
-  /markers/{markerId}:
+  /auth/token:
+    post:
+      summary: Authenticate user and retrieve API key
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthCredentials"
+      responses:
+        "200":
+          description: Authentication successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiKey"
+        "401":
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /object:
+    post:
+      summary: Add a new object.
+      security:
+        - OAuth2: [write]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Object"
+      responses:
+        "201":
+          description: The newly created object.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Object"
+  /object/list:
+    get:
+      summary: Get all objects.
+      security:
+        - OAuth2: [read]
+      responses:
+        "200":
+          description: List of all objects.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Object"
+  /object/{objectsId}:
+    get:
+      summary: Get an object by its ID
+      security:
+        - OAuth2: [read]
+      parameters:
+        - name: objectsId
+          in: path
+          description: ID of the object to retrieve
+          required: true
+          schema:
+            type: integer
+            minimum: 0
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Object"
+    put:
+      summary: Update an object by its ID
+      security:
+        - OAuth2: [write]
+      parameters:
+        - name: objectsId
+          in: path
+          description: ID of the object to update
+          required: true
+          schema:
+            type: integer
+            minimum: 0
+      requestBody:
+        description: Object object to be updated
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Object"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Object"
+  #   patch:
+  #     summary: Partially update an object by its ID
+  #     security:
+  #       - OAuth2: [write]
+  #     parameters:
+  #       - name: objectsId
+  #         in: path
+  #         description: ID of the object to update
+  #         required: true
+  #         schema:
+  #           type: integer
+  #           minimum: 0
+  #     requestBody:
+  #       description: Object object to be updated
+  #       required: true
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: '#/components/schemas/Object'
+  #     responses:
+  #       '200':
+  #         description: OK
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/Object'
+  # /object/list/count:
+  #   get:
+  #     summary: Get the total number of objects in the system
+  #     security:
+  #       - OAuth2: [read]
+  #     responses:
+  #       '200':
+  #         description: OK
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: integer
+  # /object/type/{type}/list:
+  #   get:
+  #     summary: Get all objects with a given type
+  #     security:
+  #       - OAuth2: [read]
+  #     parameters:
+  #       - name: type
+  #         in: path
+  #         description: Type of objects to retrieve
+  #         required: true
+  #         schema:
+  #           type: integer
+  #     responses:
+  #       '200':
+  #         description: OK
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: array
+  #               items:
+  #                 $ref: '#/components/schemas/Object'
+  # /object/hole/{holeId}/list:
+  #   get:
+  #     summary: Get all objects with a given holeId
+  #     security:
+  #       - OAuth2: [read]
+  #     parameters:
+  #       - name: holeId
+  #         in: path
+  #         description: HoleId of objects to retrieve
+  #         required: true
+  #         schema:
+  #           type: integer
+  #     responses:
+  #       '200':
+  #         description: OK
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: array
+  #               items:
+  #                 $ref: '#/components/schemas/Object'
+  /marker:
+    post:
+      summary: Add a new marker.
+      security:
+        - OAuth2: [write]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Marker"
+      responses:
+        "201":
+          description: The newly created marker.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Marker"
+  /marker/list:
+    get:
+      summary: Get all markers.
+      security:
+        - OAuth2: [read]
+      responses:
+        "200":
+          description: List of all markers.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Marker"
+  /marker/{markerId}:
     get:
       summary: Get a marker by its ID
+      security:
+        - OAuth2: [read]
       parameters:
         - in: path
           name: markerId
@@ -26,8 +240,360 @@ paths:
                 $ref: "#/components/schemas/Marker"
         "404":
           description: Marker not found
+    # put:
+    #   summary: Update a marker by its ID
+    #   security:
+    #     - OAuth2: [write]
+    #   parameters:
+    #     - in: path
+    #       name: markerId
+    #       description: ID of the marker to update
+    #       required: true
+    #       schema:
+    #         type: integer
+    #         minimum: 0
+    #   requestBody:
+    #     description: Updated marker object
+    #     required: true
+    #     content:
+    #       application/json:
+    #         schema:
+    #           $ref: '#/components/schemas/Marker'
+    #   responses:
+    #     '204':
+    #       description: No content
+    #     '404':
+    #       description: Marker not found
+    patch:
+      summary: Partially update a marker by its ID
+      security:
+        - OAuth2: [write]
+      parameters:
+        - in: path
+          name: markerId
+          description: ID of the marker to update
+          required: true
+          schema:
+            type: integer
+            minimum: 0
+      requestBody:
+        description: Partially updated marker object
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Marker"
+      responses:
+        "204":
+          description: No content
+        "404":
+          description: Marker not found
+  # /marker/serial/{serial}:
+  #   get:
+  #     summary: Get a marker by its serial
+  #     security:
+  #       - OAuth2: [read]
+  #     parameters:
+  #       - in: path
+  #         name: serial
+  #         description: Serial number of the marker to retrieve
+  #         required: true
+  #         schema:
+  #           type: string
+  #     responses:
+  #       '200':
+  #         description: OK
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/Marker'
+  #       '404':
+  #         description: Marker not found
+  # /marker/type/{type}/list:
+  #   get:
+  #     summary: Get all markers of a given type
+  #     security:
+  #       - OAuth2: [read]
+  #     parameters:
+  #       - in: path
+  #         name: type
+  #         description: Type of markers to retrieve
+  #         required: true
+  #         schema:
+  #           type: integer
+  #     responses:
+  #       '200':
+  #         description: OK
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: array
+  #               items:
+  #                 $ref: '#/components/schemas/Marker'
+  # /marker/hole/{holeId}/list:
+  #   get:
+  #       summary: Get all markers with a given holeId.
+  #       parameters:
+  #         - name: holeId
+  #           in: path
+  #           description: ID of the hole to retrieve markers for.
+  #           required: true
+  #           schema:
+  #             type: integer
+  #             minimum: 0
+  #       responses:
+  #         '200':
+  #           description: List of markers for the given holeId.
+  #           content:
+  #             application/json:
+  #               schema:
+  #                 type: array
+  #                 items:
+  #                   $ref: '#/components/schemas/Marker'
+  # /marker/address/{subnet}/list:
+  #   get:
+  #       summary: Get all markers of a given subnet address.
+  #       security:
+  #           - OAuth2: [read]
+  #       parameters:
+  #         - name: subnet
+  #           in: path
+  #           description: Subnet address to retrieve markers for.
+  #           required: true
+  #           schema:
+  #             type: integer
+  #             minimum: 0
+  #       responses:
+  #         '200':
+  #           description: List of markers for the given subnet address.
+  #           content:
+  #             application/json:
+  #               schema:
+  #                 type: array
+  #                 items:
+  #                   $ref: '#/components/schemas/Marker'
+  # /marker/address/{subnet}/{node}:
+  #   get:
+  #       summary: Get a marker with a given subnet and node address.
+  #       security:
+  #           - OAuth2: [read]
+  #       parameters:
+  #         - name: subnet
+  #           in: path
+  #           description: Subnet address of the marker to retrieve.
+  #           required: true
+  #           schema:
+  #             type: integer
+  #             minimum: 0
+  #         - name: node
+  #           in: path
+  #           description: Node address of the marker to retrieve.
+  #           required: true
+  #           schema:
+  #             type: integer
+  #             minimum: 0
+  #       responses:
+  #         '200':
+  #           description: The requested marker.
+  #           content:
+  #             application/json:
+  #               schema:
+  #                 $ref: '#/components/schemas/Marker'
+  /marker/{markerId}/reading/list:
+    get:
+      summary: Get all readings for a specific Marker by its ID.
+      security:
+        - OAuth2: [read]
+      parameters:
+        - name: markerId
+          in: path
+          required: true
+          description: ID of the Marker to retrieve readings for.
+          schema:
+            type: integer
+            minimum: 0
+        - name: startTimestamp
+          in: query
+          description: Start timestamp of the time range for the Marker readings to retrieve.
+          schema:
+            type: string
+            format: date-time
+        - name: endTimestamp
+          in: query
+          description: End timestamp of the time range for the Marker readings to retrieve.
+          schema:
+            type: string
+            format: date-time
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 0
+            maximum: 200
+            default: 100
+          description: The numbers of items to return
+      responses:
+        200:
+          description: List of readings for the specified Marker.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Readings"
+    post:
+      summary: Add a new reading for a specific Marker by its ID.
+      security:
+        - OAuth2: [write]
+      parameters:
+        - name: markerId
+          in: path
+          required: true
+          description: ID of the Marker to add a reading for.
+          schema:
+            type: integer
+            minimum: 0
+      requestBody:
+        required: true
+        description: JSON object containing the details of the new reading to add.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Reading"
+      responses:
+        201:
+          description: New reading added successfully.
+        400:
+          description: Invalid request body. The request body should contain the details of the new reading.
+  # /marker/{markerId}/reading/list/count:
+  #   get:
+  #     summary: Get the total number of readings for a specific Marker by its ID.
+  #     security:
+  #         - OAuth2: [read]
+  #     parameters:
+  #       - name: markerId
+  #         in: path
+  #         required: true
+  #         description: ID of the Marker to retrieve the total number of readings for.
+  #         schema:
+  #           type: integer
+  #           minimum: 0
+  #     responses:
+  #       200:
+  #         description: Total number of readings for the specified Marker.
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: integer
+  #               minimum: 0
+  /marker/{markerId}/reading/{readingId}:
+    # put:
+    #   summary: Update a specific reading for a specific Marker by its ID and reading ID.
+    #   security:
+    #     - OAuth2: [write]
+    #   parameters:
+    #     - name: markerId
+    #       in: path
+    #       description: ID of the Marker to update.
+    #       required: true
+    #       schema:
+    #         type: integer
+    #         minimum: 0
+    #     - name: readingId
+    #       in: path
+    #       description: ID of the Reading to update.
+    #       required: true
+    #       schema:
+    #         type: integer
+    #         minimum: 0
+    #   requestBody:
+    #     description: New properties of the Reading.
+    #     required: true
+    #     content:
+    #       application/json:
+    #         schema:
+    #           $ref: '#/components/schemas/Reading'
+    #   responses:
+    #     200:
+    #       description: Successful response.
+    #     400:
+    #       description: Invalid input data.
+    #     404:
+    #       description: Marker or Reading not found.
+    delete:
+      summary: Delete a specific reading for a specific Marker by its ID and reading ID.
+      security:
+        - OAuth2: [write]
+      parameters:
+        - name: markerId
+          in: path
+          description: ID of the Marker to delete Reading from.
+          required: true
+          schema:
+            type: integer
+            minimum: 0
+        - name: readingId
+          in: path
+          description: ID of the Reading to delete.
+          required: true
+          schema:
+            type: integer
+            minimum: 0
+      responses:
+        204:
+          description: Successful response.
+        404:
+          description: Marker or Reading not found.
 components:
   schemas:
+    AuthCredentials:
+      type: object
+      properties:
+        "username":
+          type: string
+          description: User's username
+        "password":
+          type: string
+          description: User's password
+      required:
+        - "username"
+        - "password"
+    ApiKey:
+      type: object
+      properties:
+        "apiKey":
+          type: string
+          description: Generated API key
+    Error:
+      type: object
+      properties:
+        "error":
+          type: string
+          description: Error message
+    Object:
+      type: object
+      properties:
+        "objectsId":
+          type: integer
+          minimum: 0
+        "type":
+          type: integer
+          minimum: 0
+          default: 0
+        "serial":
+          type: string
+        "holeId":
+          type: integer
+          minimum: -1
+          default: -1
+      required:
+        - "type"
+        - "serial"
+      example:
+        "objectsId": 1
+        "type": 1
+        "serial": "M1"
+        "holeId": -1
     Marker:
       type: object
       properties:
@@ -52,6 +618,10 @@ components:
             "z":
               type: number
               format: float
+          required:
+            - "x"
+            - "y"
+            - "z"
           example:
             "x": 5.962134
             "y": 5.637377
@@ -65,6 +635,7 @@ components:
       required:
         - "subnet"
         - "node"
+        - "installPosition"
       example:
         "subnet": 1
         "node": 1
@@ -75,3 +646,66 @@ components:
         "activationTime": 2000-01-23T04:56:07.000+00:00
         "markerId": 1
         "activated": true
+    Reading:
+      type: object
+      properties:
+        "readingId":
+          type: integer
+          minimum: 0
+        "markerId":
+          type: integer
+          minimum: 0
+        "timestamp":
+          type: string
+          format: date-time
+        "temperature":
+          type: number
+          format: float
+        "porePressure":
+          type: number
+          format: float
+      required:
+        - "markerId"
+        - "timestamp"
+      example:
+        "readingId": 1
+        "timestamp": 2000-01-23T04:56:07.000+00:00
+        "temperature": 26.0274563
+        "porePressure": 46581.29
+    Readings:
+      type: array
+      items:
+        type: object
+        properties:
+          "readingId":
+            type: integer
+            minimum: 0
+          "markerId":
+            type: integer
+            minimum: 0
+          "timestamp":
+            type: string
+            format: date-time
+          "temperature":
+            type: number
+            format: float
+          "porePressure":
+            type: number
+            format: float
+        required:
+          - "markerId"
+          - "timestamp"
+        example:
+          "readingId": 1
+          "timestamp": 2000-01-23T04:56:07.000+00:00
+          "temperature": 26.0274563
+          "porePressure": 46581.29
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://auth.example.com/token
+          scopes:
+            read: Read access to the API
+            write: Write access to the API
