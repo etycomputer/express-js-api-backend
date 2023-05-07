@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
-import { Marker } from "../models/marker";
-import { Position } from "../models/position";
+import { Marker } from "../models/marker.model";
 
 export class MarkerController {
   /**
@@ -8,8 +7,8 @@ export class MarkerController {
    */
   async getAllMarkers(req: Request, res: Response): Promise<void> {
     try {
-      //const users = await UserModel.find();
-      res.json({});
+      const marker = new Marker();
+      res.json(marker.getAllMarkers());
     } catch (error) {
       res.status(500).send(error);
     }
@@ -20,10 +19,11 @@ export class MarkerController {
    */
   async getMarkerById(req: Request, res: Response): Promise<void> {
     try {
-      //const user = await UserModel.findById(req.params.id);
-      const marker = false;
-      if (marker) {
-        res.json(marker);
+      const marker = new Marker();
+      const markerId = parseInt(req.params.markerId, 10);
+      const result = marker.getMarkerById(markerId);
+      if (result !== null) {
+        res.json(result);
       } else {
         res.status(404).send("Marker not found");
       }

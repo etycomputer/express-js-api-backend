@@ -1,9 +1,10 @@
 import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { IObject } from "../interfaces/object.interface";
 
-@Entity("objects")
-export class objectEntity {
+@Entity({ name: "objects" })
+export class ObjectEntity implements IObject {
   @PrimaryGeneratedColumn()
-  objectsId!: number;
+  objectId!: number;
 
   @Column({ type: "text", unique: true })
   serial!: string;

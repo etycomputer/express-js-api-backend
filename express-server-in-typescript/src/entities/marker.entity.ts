@@ -4,9 +4,10 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
 } from "typeorm";
+import { IMarker } from "../interfaces/marker.interface";
 
-@Entity("markers")
-export class markerEntity {
+@Entity({ name: "markers" })
+export class MarkerEntity implements IMarker {
   @PrimaryGeneratedColumn()
   markerId!: number;
 
@@ -28,7 +29,7 @@ export class markerEntity {
   @Column({ type: "boolean", default: false })
   activated!: boolean;
 
-  @Column("timestamp with time zone")
+  @Column({ type: "timestamp with time zone", nullable: true, default: null })
   @CreateDateColumn()
-  activationTime!: Date;
+  activationTime!: null | Date;
 }

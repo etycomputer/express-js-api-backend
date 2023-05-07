@@ -1,6 +1,7 @@
 import { DataSourceOptions, DataSource } from "typeorm";
+import dotenv from "dotenv";
 
-require("dotenv").config();
+dotenv.config();
 
 const isProd = process.env.NODE_ENV === "production";
 
@@ -11,7 +12,7 @@ export const readwriteConfig: DataSourceOptions = {
   username: process.env.DB_RW_USERNAME!,
   password: process.env.DB_RW_PASSWORD!,
   database: process.env.DB_NAME!,
-  entities: ["./database/entities/**/*.ts"],
+  entities: ["./**/*.entity.ts"],
   migrations: ["./database/migrations/**/*.ts"],
   logging: !isProd,
   synchronize: false,

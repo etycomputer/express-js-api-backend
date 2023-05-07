@@ -17,7 +17,7 @@
   "rules": {
     "no-console": 0 // Remember, this means error!
   },
-  "ignorePatterns": ["node_modules/*", "dist/*"],
+  "ignorePatterns": ["node_modules/*", "dist/*", "logs/*"],
   "overrides": [
     {
       "files": ["**/*.md"],

@@ -1,12 +1,12 @@
 import { DataSource } from "typeorm";
-import { markerEntity } from "../entities/markerEntity";
+import { MarkerEntity } from "../../entities/marker.entity";
 import logger from "../../configs/logging";
 
 export default async function seedDefault(
   connection: DataSource
 ): Promise<void> {
   logger.info("step 2.1");
-  const markers: markerEntity[] = [
+  const markers: MarkerEntity[] = [
     {
       markerId: -1,
       subnet: 1,
@@ -42,7 +42,7 @@ export default async function seedDefault(
   await connection
     .createQueryBuilder()
     .insert()
-    .into(markerEntity)
+    .into(MarkerEntity)
     .values(markers)
     .execute();
 }

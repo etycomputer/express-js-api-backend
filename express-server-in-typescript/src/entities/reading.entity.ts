@@ -4,19 +4,23 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
 } from "typeorm";
+import { IReading } from "../interfaces/reading.interface";
 
-@Entity("readings")
-export class readingEntity {
+@Entity({ name: "readings" })
+export class ReadingEntity implements IReading {
   @PrimaryGeneratedColumn()
   readingId!: number;
+
+  @Column("integer")
+  markerId!: number;
 
   @Column("timestamp with time zone")
   @CreateDateColumn()
   timestamp!: Date;
 
   @Column({ type: "double precision", nullable: true, default: null })
-  temperature!: number;
+  temperature!: null | number;
 
   @Column({ type: "double precision", nullable: true, default: null })
-  porePressure!: Date;
+  porePressure!: null | number;
 }

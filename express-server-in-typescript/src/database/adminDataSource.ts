@@ -1,6 +1,7 @@
 import { DataSourceOptions, DataSource } from "typeorm";
+import dotenv from "dotenv";
 
-require("dotenv").config();
+dotenv.config();
 
 const adminConfig: DataSourceOptions = {
   type: "postgres",
@@ -9,7 +10,7 @@ const adminConfig: DataSourceOptions = {
   username: process.env.DB_ADMIN_USERNAME!,
   password: process.env.DB_ADMIN_PASSWORD!,
   database: process.env.DB_NAME!,
-  entities: ["./database/entities/**/*.ts"],
+  entities: ["./**/*.entity.ts"],
   migrations: ["./database/migrations/**/*.ts"],
   logging: true,
   synchronize: false,
